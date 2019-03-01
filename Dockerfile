@@ -36,5 +36,6 @@ RUN ln -s /usr/bin/php7 /usr/bin/php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     mkdir -p /run/nginx && mkdir -p /init/ && chmod 777 /entrypoint.sh
 
+
 ENTRYPOINT /entrypoint.sh
 EXPOSE 80
