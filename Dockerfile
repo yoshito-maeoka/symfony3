@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-alpine
+FROM php:7.0-fpm-alpine
 
 RUN apk add --no-cache --virtual .ext-deps \
         libjpeg-turbo-dev \
@@ -20,7 +20,7 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
 RUN apk add --update --no-cache \
     libc6-compat fontconfig \
     libgcc libstdc++ libx11 glib libxrender libxext libintl \
-    libcrypto1.1 libssl1.1 \
+    libcrypto1.0 libssl1.0 \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
 
 RUN docker-php-ext-configure pdo_mysql && \
