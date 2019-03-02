@@ -1,4 +1,4 @@
-FROM php:7-fpm-alpine
+FROM php:7.1-fpm-alpine
 
 RUN apk add --no-cache --virtual .ext-deps \
         libjpeg-turbo-dev \
@@ -17,15 +17,19 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
     && docker-php-ext-enable imagick \
     && apk del autoconf g++ libtool make pcre-dev
 
+RUN apk add --update --no-cache \
+    libc6-compat fontconfig \
+    libgcc libstdc++ libx11 glib libxrender libxext libintl \
+    libcrypto1.1 libssl1.1 \
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
+
 RUN docker-php-ext-configure pdo_mysql && \
     docker-php-ext-configure opcache && \
     docker-php-ext-configure exif && \
     docker-php-ext-configure gd \
-    --with-jpeg-dir=/usr/include --with-png-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=/usr/include && \
-    docker-php-ext-configure sockets && \
-    docker-php-ext-configure mcrypt
+    --with-jpeg-dir=/usr/include --with-png-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=/usr/include
 
-RUN docker-php-ext-install pdo_mysql opcache exif gd sockets mcrypt && \
+RUN docker-php-ext-install pdo_mysql opcache exif gd && \
     docker-php-source delete
 
 COPY default.conf /etc/nginx/conf.d/default.conf
@@ -35,7 +39,6 @@ COPY php-fpm.conf /etc/php7/php-fpm.conf
 RUN ln -s /usr/bin/php7 /usr/bin/php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     mkdir -p /run/nginx && mkdir -p /init/ && chmod 777 /entrypoint.sh
-
 
 ENTRYPOINT /entrypoint.sh
 EXPOSE 80
