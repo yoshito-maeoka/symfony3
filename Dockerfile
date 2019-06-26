@@ -21,7 +21,8 @@ RUN apk add --update --no-cache \
     libc6-compat fontconfig \
     libgcc libstdc++ libx11 glib libxrender libxext libintl \
     libcrypto1.0 libssl1.0 \
-    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family \
+    jpegoptim optipng pngquant gifsicle
 
 RUN docker-php-ext-configure pdo_mysql && \
     docker-php-ext-configure opcache && \
