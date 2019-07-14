@@ -1,4 +1,4 @@
-FROM php:7.0-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 RUN apk add --no-cache --virtual .ext-deps \
         libjpeg-turbo-dev \
@@ -7,7 +7,7 @@ RUN apk add --no-cache --virtual .ext-deps \
         freetype-dev \
         libmcrypt-dev \
         nodejs-npm \
-        nginx \
+        yarn \
         git \
         inkscape
 
@@ -33,13 +33,13 @@ RUN docker-php-ext-configure pdo_mysql && \
 RUN docker-php-ext-install pdo_mysql opcache exif gd zip && \
     docker-php-source delete
 
-COPY default.conf /etc/nginx/conf.d/default.conf
+# COPY default.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /entrypoint.sh
 COPY php-fpm.conf /etc/php7/php-fpm.conf
 
 RUN ln -s /usr/bin/php7 /usr/bin/php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    mkdir -p /run/nginx && mkdir -p /init/ && chmod 777 /entrypoint.sh
+    mkdir -p /init/ && chmod 777 /entrypoint.sh
 
 ENTRYPOINT /entrypoint.sh
 EXPOSE 80
