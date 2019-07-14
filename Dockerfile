@@ -6,6 +6,10 @@ RUN apk add --no-cache --virtual .ext-deps \
         libpng-dev \
         freetype-dev \
         libmcrypt-dev \
+        bash \
+        bash-completion \
+        apache2 \
+        mysql \
         nodejs-npm \
         yarn \
         git \
@@ -20,7 +24,7 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
 RUN apk add --update --no-cache \
     libc6-compat fontconfig \
     libgcc libstdc++ libx11 glib libxrender libxext libintl \
-    libcrypto1.0 libssl1.0 \
+    libcrypto1.1 libssl1.1 \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family \
     jpegoptim optipng pngquant gifsicle
 
