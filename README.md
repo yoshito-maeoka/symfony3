@@ -1,2 +1,2 @@
-# symfony3
-# symfony3
+# a project specific symfony3 image
+
